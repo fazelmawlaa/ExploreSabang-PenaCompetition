@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Sabang</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Source+Sans+Pro:wght@300;400;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    .gradient-ocean {
+      background: linear-gradient(135deg, #0c4a6e 0%, #0891b2 50%, #06b6d4 100%);
+    }
+    .gradient-sunset {
+      background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    .tab-active {
+      background: linear-gradient(135deg, #0891b2, #06b6d4);
+      color: white;
+    }
+    .status-open {
+      background: #10b981;
+    }
+    .status-closed {
+      background: #ef4444;
+    }
+    .booking-btn {
+      transition: all 0.2s ease;
+    }
+    .booking-btn:hover {
+      transform: scale(1.02);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    .star-rating {
+      color: #fbbf24;
+    }
+    .modal-overlay {
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full bg-slate-50 text-slate-800 overflow-auto">
+  <div id="app" class="w-full h-full"><!-- Navigation -->
+   <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+  <img src="static/images/logo.png" alt="Logo Explore Sabang" class="h-10 w-auto object-contain">
+  <h1 id="nav-title" class="font-display text-xl font-bold text-cyan-700">Explore Sabang</h1>
+  </div>
+     <div class= "hidden md:flex items-center gap-6"><button onclick="scrollToSection('destinations')" class="text-slate-600 hover:text-cyan-600 transition">Destinasi</button> <button onclick="scrollToSection('accommodations')" class="text-slate-600 hover:text-cyan-600 transition">Akomodasi</button> <button onclick="scrollToSection('culinary')" class="text-slate-600 hover:text-cyan-600 transition">Kuliner</button> <button onclick="scrollToSection('planner')" class="text-slate-600 hover:text-cyan-600 transition">Itinerary</button> <button onclick="scrollToSection('transport')" class="text-slate-600 hover:text-cyan-600 transition">Transport</button>
+     </div><button onclick="toggleMobileMenu()" class="md:hidden text-2xl">☰</button>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+     <div class="px-4 py-3 flex flex-col gap-3"><button onclick="scrollToSection('destinations'); toggleMobileMenu()" class="text-left py-2 text-slate-600">🏖️ Destinasi</button> <button onclick="scrollToSection('accommodations'); toggleMobileMenu()" class="text-left py-2 text-slate-600">🏨 Akomodasi</button> <button onclick="scrollToSection('culinary'); toggleMobileMenu()" class="text-left py-2 text-slate-600">🍜 Kuliner</button> <button onclick="scrollToSection('planner'); toggleMobileMenu()" class="text-left py-2 text-slate-600">📋 Itinerary</button> <button onclick="scrollToSection('transport'); toggleMobileMenu()" class="text-left py-2 text-slate-600">🚗 Transport</button>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <header class="gradient-ocean pt-20 pb-16 px-4 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <div class="absolute top-10 left-10 text-8xl float-animation">
+      🐠
+     </div>
+     <div class="absolute top-20 right-20 text-6xl float-animation" style="animation-delay: 0.5s">
+      🐚
+     </div>
+     <div class="absolute bottom-20 left-1/4 text-7xl float-animation" style="animation-delay: 1s">
+      🦀
+     </div>
+     <div class="absolute bottom-10 right-1/3 text-5xl float-animation" style="animation-delay: 1.5s">
+      ⭐
+     </div>
+    </div>
+    <div class="max-w-4xl mx-auto text-center relative z-10 py-12">
+     <h1 id="hero-title" class="font-display text-4xl md:text-6xl font-bold mb-4">Explore Sabang</h1>
+     <p id="hero-tagline" class="text-xl md:text-2xl opacity-90 mb-8">Temukan surga di ujung barat Indonesia</p><button onclick="scrollToSection('destinations')" id="hero-cta" class="bg-white text-cyan-700 px-8 py-3 rounded-full font-semibold text-lg hover:bg-cyan-50 transition shadow-lg"> Mulai Jelajahi </button>
+     <div class="mt-10 grid grid-cols-3 gap-4 max-w-md mx-auto">
+      <div class="bg-white/20 rounded-xl p-3 backdrop-blur-sm">
+       <div class="text-2xl font-bold">
+        15+
+       </div>
+       <div class="text-sm opacity-80">
+        Destinasi
+       </div>
+      </div>
+      <div class="bg-white/20 rounded-xl p-3 backdrop-blur-sm">
+       <div class="text-2xl font-bold">
+        20+
+       </div>
+       <div class="text-sm opacity-80">
+        Hotel
+       </div>
+      </div>
+      <div class="bg-white/20 rounded-xl p-3 backdrop-blur-sm">
+       <div class="text-2xl font-bold">
+        30+
+       </div>
+       <div class="text-sm opacity-80">
+        Kuliner
+       </div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content Tabs -->
+   <main class="max-w-7xl mx-auto px-4 py-8"><!-- Quick Navigation Tabs -->
+    <div class="flex flex-wrap gap-2 mb-8 sticky top-16 bg-slate-50 py-4 z-40"><button onclick="setActiveTab('destinations')" id="tab-destinations" class="px-4 py-2 rounded-full font-medium transition tab-active">🏖️ Destinasi</button> <button onclick="setActiveTab('accommodations')" id="tab-accommodations" class="px-4 py-2 rounded-full font-medium transition bg-white shadow">🏨 Akomodasi</button> <button onclick="setActiveTab('culinary')" id="tab-culinary" class="px-4 py-2 rounded-full font-medium transition bg-white shadow">🍜 Kuliner</button> <button onclick="setActiveTab('planner')" id="tab-planner" class="px-4 py-2 rounded-full font-medium transition bg-white shadow">📋 Planner</button> <button onclick="setActiveTab('transport')" id="tab-transport" class="px-4 py-2 rounded-full font-medium transition bg-white shadow">🚗 Transport</button> <button onclick="setActiveTab('packages')" id="tab-packages" class="px-4 py-2 rounded-full font-medium transition bg-white shadow">📦 Paket Wisata</button>
+    </div><!-- DESTINATIONS SECTION -->
+    <section id="destinations" class="tab-content">
+     <div class="flex items-center justify-between mb-6">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-slate-800">Destinasi Wisata Sabang</h2>
+      <div class="flex gap-2"><select id="filter-category" onchange="filterDestinations()" class="px-3 py-2 rounded-lg border bg-white text-sm"> <option value="all">Semua Kategori</option> <option value="pantai">Pantai</option> <option value="sejarah">Sejarah</option> <option value="alam">Alam</option> <option value="diving">Diving</option> </select>
+      </div>
+     </div>
+     <div id="destinations-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Destinations will be rendered here -->
+     </div>
+    </section><!-- ACCOMMODATIONS SECTION -->
+    <section id="accommodations" class="tab-content hidden">
+     <div class="flex items-center justify-between mb-6">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-slate-800">Akomodasi di Sabang</h2><select id="filter-accommodation" onchange="filterAccommodations()" class="px-3 py-2 rounded-lg border bg-white text-sm"> <option value="all">Semua Tipe</option> <option value="hotel">Hotel</option> <option value="resort">Resort</option> <option value="homestay">Homestay</option> <option value="villa">Villa</option> </select>
+     </div>
+     <div id="accommodations-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Accommodations will be rendered here -->
+     </div>
+    </section><!-- CULINARY SECTION -->
+    <section id="culinary" class="tab-content hidden">
+     <h2 class="font-display text-2xl md:text-3xl font-bold text-slate-800 mb-6">Kuliner Khas Sabang</h2>
+     <div id="culinary-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Culinary will be rendered here -->
+     </div>
+    </section><!-- ITINERARY PLANNER SECTION -->
+    <section id="planner" class="tab-content hidden">
+     <h2 class="font-display text-2xl md:text-3xl font-bold text-slate-800 mb-6">Itinerary Planner</h2><!-- Budget Calculator -->
+     <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl p-6 text-white mb-8">
+      <h3 class="text-xl font-bold mb-4">💰 Estimasi Budget Perjalanan</h3>
+      <div class="grid md:grid-cols-4 gap-4">
+       <div><label class="block text-sm opacity-80 mb-1">Jumlah Hari</label> <input type="number" id="budget-days" value="3" min="1" max="14" onchange="calculateBudget()" class="w-full px-3 py-2 rounded-lg text-slate-800">
+       </div>
+       <div><label class="block text-sm opacity-80 mb-1">Jumlah Orang</label> <input type="number" id="budget-people" value="2" min="1" max="20" onchange="calculateBudget()" class="w-full px-3 py-2 rounded-lg text-slate-800">
+       </div>
+       <div><label class="block text-sm opacity-80 mb-1">Tipe Akomodasi</label> <select id="budget-accommodation" onchange="calculateBudget()" class="w-full px-3 py-2 rounded-lg text-slate-800"> <option value="budget">Budget (300K/malam)</option> <option value="mid" selected>Menengah (600K/malam)</option> <option value="luxury">Mewah (1.2Jt/malam)</option> </select>
+       </div>
+       <div><label class="block text-sm opacity-80 mb-1">Total Estimasi</label>
+        <div id="budget-total" class="text-2xl font-bold py-2">
+         Rp 3.600.000
+        </div>
+       </div>
+      </div>
+     </div><!-- Itinerary Builder -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+      <h3 class="text-xl font-bold mb-4">📋 Buat Itinerary Anda</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div><label class="block text-sm font-medium mb-2">Nama Itinerary</label> <input type="text" id="itinerary-name" placeholder="Liburan Sabang 2024" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+       </div>
+       <div><label class="block text-sm font-medium mb-2">Pilih Destinasi</label>
+        <div id="itinerary-destinations" class="flex flex-wrap gap-2"><!-- Destination chips will be rendered here -->
+        </div>
+       </div>
+      </div>
+      <div class="mt-4 flex gap-3"><button onclick="saveItinerary()" id="save-itinerary-btn" class="bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-700 transition"> 💾 Simpan Itinerary </button> <button onclick="generateAutoItinerary()" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"> ✨ Generate Otomatis </button>
+      </div>
+     </div><!-- Saved Itineraries -->
+     <div class="bg-white rounded-2xl shadow-lg p-6">
+      <h3 class="text-xl font-bold mb-4">📁 Itinerary Tersimpan</h3>
+      <div id="saved-itineraries" class="space-y-3">
+       <p class="text-slate-500 text-center py-4">Belum ada itinerary tersimpan</p>
+      </div>
+     </div>
+    </section><!-- TRANSPORT SECTION -->
+   <section id="transport" class="tab-content hidden">
+     <h2 class="font-display text-2xl md:text-3xl font-bold text-slate-800 mb-6">Transportasi ke Sabang</h2>
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+       <div class="bg-blue-600 text-white p-4">
+        <h3 class="text-xl font-bold">⛴️ Kapal Ferry (Lambat)</h3>
+        <p class="opacity-80">Pelabuhan Ulee Lheue → Balohan</p>
+       </div>
+       <div class="p-4 space-y-3">
+        <div class="flex justify-between items-center py-2 border-b">
+         <div>
+          <div class="font-semibold">
+           Kelas Ekonomi
+          </div>
+          <div class="text-sm text-slate-500">
+           Ruang duduk standar / Deck
+          </div>
+         </div>
+         <div class="text-right">
+          <div class="font-bold text-cyan-600">
+           Rp 35.000
+          </div>
+          <div class="text-xs text-slate-500">
+           2 jam perjalanan
+          </div>
+         </div>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b">
+         <div>
+          <div class="font-semibold">
+           Kelas VIP (AC)
+          </div>
+          <div class="text-sm text-slate-500">
+           Ruangan dingin & kursi empuk
+          </div>
+         </div>
+         <div class="text-right">
+          <div class="font-bold text-cyan-600">
+           Rp 60.000
+          </div>
+          <div class="text-xs text-slate-500">
+           2 jam perjalanan
+          </div>
+         </div>
+        </div>
+        <div class="bg-amber-50 rounded-lg p-3 text-sm"><strong>⏰ Jadwal:</strong> Berangkat pukul 08:00, 14:00, 17.00 (Senin-Minggu)
+        </div>
+       </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+       <div class="gradient-sunset text-white p-4">
+        <h3 class="text-xl font-bold">🚤 Kapal Cepat (Express)</h3>
+        <p class="opacity-80">Express ke Sabang</p>
+       </div>
+       <div class="p-4 space-y-3">
+        <div class="flex justify-between items-center py-2 border-b">
+         <div>
+          <div class="font-semibold">
+           Kelas Ekonomi
+          </div>
+          <div class="text-sm text-slate-500">
+           Kapasitas ~250 orang
+          </div>
+         </div>
+         <div class="text-right">
+          <div class="font-bold text-orange-600">
+           Rp 100.000
+          </div>
+          <div class="text-xs text-slate-500">
+           45 menit perjalanan
+          </div>
+         </div>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b">
+         <div>
+          <div class="font-semibold">
+           Kelas VIP
+          </div>
+          <div class="text-sm text-slate-500">
+           Priority seat & snack
+          </div>
+         </div>
+         <div class="text-right">
+          <div class="font-bold text-orange-600">
+           Rp 125.000
+          </div>
+          <div class="text-xs text-slate-500">
+           45 menit perjalanan
+          </div>
+         </div>
+        </div>
+        <div class="bg-cyan-50 rounded-lg p-3 text-sm"><strong>⏰ Jadwal:</strong> Berangkat pukul 08:00, 10:00, 16.30 (Senin-Minggu)
+        </div>
+       </div>
+      </div>
+
+     </div>
+     
+     <div class="bg-white rounded-2xl shadow-lg p-6">
+      <h3 class="text-xl font-bold mb-4">🚗 Transportasi Lokal di Sabang</h3>
+      <div class="grid md:grid-cols-3 gap-4">
+       <div class="border rounded-xl p-4 text-center hover:border-cyan-500 transition">
+        <div class="text-4xl mb-2">
+         🛵
+        </div>
+        <div class="font-semibold">
+         Sewa Motor
+        </div>
+        <div class="text-cyan-600 font-bold">
+         Rp 100.000 - 150.000/hari
+        </div>
+        <div class="text-sm text-slate-500 mt-1">
+         Paling fleksibel
+        </div>
+       </div>
+       <div class="border rounded-xl p-4 text-center hover:border-cyan-500 transition">
+        <div class="text-4xl mb-2">
+         🚗
+        </div>
+        <div class="font-semibold">
+         Sewa Mobil
+        </div>
+        <div class="text-cyan-600 font-bold">
+         Rp 250.000 - 400.000/hari
+        </div>
+        <div class="text-sm text-slate-500 mt-1">
+         Dengan/tanpa driver
+        </div>
+       </div>
+       <div class="border rounded-xl p-4 text-center hover:border-cyan-500 transition">
+        <div class="text-4xl mb-2">
+         🚐
+        </div>
+        <div class="font-semibold">
+         Hiace
+        </div>
+        <div class="text-cyan-600 font-bold">
+         Rp 1.000.000 - 1.200.000/hari
+        </div>
+        <div class="text-sm text-slate-500 mt-1">
+         Luxury class
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    </section><!-- PACKAGES SECTION -->
+    <section id="packages" class="tab-content hidden">
+     <h2 class="font-display text-2xl md:text-3xl font-bold text-slate-800 mb-6">Paket Wisata Bundling</h2>
+     <div id="packages-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Packages will be rendered here -->
+     </div>
+    </section>
+   </main><!-- Destination Detail Modal -->
+   <div id="destination-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
+    <div class="relative z-10 max-w-3xl mx-auto mt-10 mb-10 bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90%] overflow-y-auto">
+     <div id="modal-content"><!-- Modal content will be rendered here -->
+     </div>
+    </div>
+   </div><!-- Review Modal -->
+   <div id="review-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closeReviewModal()"></div>
+    <div class="relative z-10 max-w-md mx-auto mt-20 bg-white rounded-2xl shadow-2xl p-6">
+     <h3 class="text-xl font-bold mb-4">⭐ Tulis Review</h3><input type="hidden" id="review-destination-id">
+     <div class="mb-4"><label class="block text-sm font-medium mb-2">Nama Anda</label> <input type="text" id="review-name" placeholder="Nama Anda" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-cyan-500">
+     </div>
+     <div class="mb-4"><label class="block text-sm font-medium mb-2">Rating</label>
+      <div id="review-rating" class="flex gap-2"><button type="button" onclick="setReviewRating(1)" class="text-2xl text-slate-300 hover:text-amber-400">★</button> <button type="button" onclick="setReviewRating(2)" class="text-2xl text-slate-300 hover:text-amber-400">★</button> <button type="button" onclick="setReviewRating(3)" class="text-2xl text-slate-300 hover:text-amber-400">★</button> <button type="button" onclick="setReviewRating(4)" class="text-2xl text-slate-300 hover:text-amber-400">★</button> <button type="button" onclick="setReviewRating(5)" class="text-2xl text-slate-300 hover:text-amber-400">★</button>
+      </div>
+     </div>
+     <div class="mb-4"><label class="block text-sm font-medium mb-2">Review</label> <textarea id="review-text" rows="3" placeholder="Ceritakan pengalaman Anda..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-cyan-500"></textarea>
+     </div>
+     <div class="flex gap-3"><button onclick="submitReview()" id="submit-review-btn" class="flex-1 bg-cyan-600 text-white py-2 rounded-lg hover:bg-cyan-700 transition"> Kirim Review </button> <button onclick="closeReviewModal()" class="px-4 py-2 border rounded-lg hover:bg-slate-50 transition"> Batal </button>
+     </div>
+    </div>
+   </div><!-- Footer -->
+   <footer class="bg-slate-800 text-white py-10 px-4 mt-12">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
+     <div>
+     <div class="flex items-center gap-2 mb-4">
+  <img src="static/images/logo.png" alt="Logo Explore Sabang" class="h-10 w-auto object-contain">
+   <span class="font-display text-xl font-bold">Explore Sabang</span>
+</div>
+      <p class="text-slate-400 text-sm">Portal wisata lengkap untuk menjelajahi keindahan Pulau Weh, Sabang.</p>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-3">Destinasi Populer</h4>
+      <ul class="space-y-2 text-sm text-slate-400">
+       <li>Pantai Iboih</li>
+       <li>Kilometer Nol</li>
+       <li>Pantai Gapang</li>
+       <li>Rubiah Sea Garden</li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-3">Informasi</h4>
+      <ul class="space-y-2 text-sm text-slate-400">
+       <li>Cara ke Sabang</li>
+       <li>Tips Perjalanan</li>
+       <li>Cuaca &amp; Musim</li>
+       <li>Kontak Darurat</li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-3">Partner Booking</h4>
+      <div class="flex flex-wrap gap-2"><span class="bg-slate-700 px-3 py-1 rounded text-sm">Traveloka</span> <span class="bg-slate-700 px-3 py-1 rounded text-sm">Booking.com</span> <span class="bg-slate-700 px-3 py-1 rounded text-sm">Tiket.com</span> <span class="bg-slate-700 px-3 py-1 rounded text-sm">Agoda</span>
+      </div>
+     </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-slate-700 text-center text-sm text-slate-500">
+     © 2024 Explore Sabang. Made with ❤️ for Indonesian Tourism
+    </div>
+   </footer>
+  </div>
+  <script>
+    // ================= CONFIG & STATE =================
+    const defaultConfig = {
+      site_title: 'Explore Sabang',
+      hero_tagline: 'Temukan surga di ujung barat Indonesia',
+      cta_button_text: 'Mulai Jelajahi',
+      primary_color: '#0891b2',
+      secondary_color: '#f97316',
+      background_color: '#f8fafc',
+      text_color: '#1e293b',
+      accent_color: '#06b6d4'
+    };
+
+    let config = { ...defaultConfig };
+    // GANTI baris "let userReviews = [];" dengan kode ini:
+    let userReviews = [
+      {
+        id: 'r1',
+        type: 'review',
+        destination_id: 'pantai-iboih', // ID ini harus sama dengan ID destinasi
+        rating: 5,
+        review: 'Bagus Sekali👍🏻',
+        reviewer_name: 'Ibrahim Soeg',
+        created_at: '2024-01-20T10:00:00Z'
+      },
+      {
+        id: 'r2',
+        type: 'review',
+        destination_id: 'pantai-iboih',
+        rating: 5,
+        review: 'Fasilitas lengkap, ada toilet bersih dan penyewaan alat snorkeling. Warga lokal sangat ramah.',
+        reviewer_name: 'Budi Santoso',
+        created_at: '2024-02-05T14:30:00Z'
+      },
+      {
+        id: 'r3',
+        type: 'review',
+        destination_id: 'pantai-iboih',
+        rating: 4,
+        review: 'Pemandangan sunset terbaik! Sayang kalau weekend agak ramai, tapi worth it banget buat healing. Akses jalan sudah mulus.',
+        reviewer_name: 'Balia',
+        created_at: '2024-02-12T09:15:00Z'
+      },
+      // Review untuk KM Nol (agar destinasi lain juga ada isinya)
+      {
+        id: 'r4',
+        type: 'review',
+        destination_id: 'km-nol',
+        rating: 5,
+        review: 'Titik nol kilometer Indonesia! Wajib foto di sini sebagai bukti sudah sampai ujung barat. Sertifikatnya keren.',
+        reviewer_name: 'Rizky Pratama',
+        created_at: '2024-01-15T16:20:00Z'
+      }
+    ];
+   // GANTI baris "let savedItineraries = [];" dengan ini:
+    let savedItineraries = [
+      {
+        id: 'it1',
+        type: 'itinerary',
+        itinerary_name: 'Trip Hemat Backpacker',
+        destinations: JSON.stringify(['km-nol', 'pantai-iboih', 'rubiah-sea-garden']),
+        budget: 1250000,
+        created_at: '2024-02-10T08:00:00Z'
+      },
+      {
+        id: 'it2',
+        type: 'itinerary',
+        itinerary_name: 'Jelajah Sejarah & Alam',
+        destinations: JSON.stringify(['benteng-jepang', 'pantai-sumur-tiga', 'danau-aneuk-laot']),
+        budget: 2500000,
+        created_at: '2024-02-12T10:30:00Z'
+      },
+      {
+        id: 'it3',
+        type: 'itinerary',
+        itinerary_name: 'Diving & Relax Luxury',
+        destinations: JSON.stringify(['pantai-gapang', 'rubiah-sea-garden', 'air-terjun-pria-laot']),
+        budget: 5800000,
+        created_at: '2024-02-14T15:45:00Z'
+      }
+    ];
+    let currentReviewRating = 0;
+    let selectedItineraryDestinations = [];
+
+    // ================= REFERENCE DATA =================
+    const destinations = [
+      {
+        id: 'pantai-iboih',
+        name: 'Pantai Iboih',
+        category: 'pantai',
+        description: 'Pantai dengan air jernih dan terumbu karang yang indah. Spot terbaik untuk snorkeling dan diving di Sabang.',
+        location: 'Iboih, Sukakarya, Sabang',
+        openHours: '06:00 - 18:00',
+        price: 10000,
+        facilities: ['Toilet', 'Warung', 'Penyewaan Snorkeling', 'Penginapan'],
+        rating: 4.8,
+        image: 'static/images/pantai-iboih.jpg',
+        mapUrl: 'https://maps.app.goo.gl/7nXTkpKcBp72eVx66?g_st=ic'
+      },
+      {
+        id: 'km-nol',
+        name: 'Kilometer Nol Indonesia',
+        category: 'sejarah',
+        description: 'Tugu ikonik yang menandai titik paling barat Indonesia. Wajib dikunjungi untuk dokumentasi.',
+        location: 'Ujong Ba\'u, Sukakarya, Sabang',
+        openHours: '24 Jam',
+        price: 5000,
+        facilities: ['Parkir', 'Toilet', 'Warung', 'Spot Foto'],
+        rating: 4.9,
+        image: 'static/images/km0.jpg',
+        mapUrl: 'https://maps.app.goo.gl/XvXpcoPr2p8MbQ7r8?g_st=ic'
+      },
+      {
+        id: 'pantai-gapang',
+        name: 'Pantai Gapang',
+        category: 'pantai',
+        description: 'Pantai tenang dengan pemandangan sunset terbaik. Cocok untuk relaksasi dan diving.',
+        location: 'Gapang, Sukakarya, Sabang',
+        openHours: '06:00 - 18:00',
+        price: 5000,
+        facilities: ['Resort', 'Diving Center', 'Restoran', 'Toilet'],
+        rating: 4.7,
+        image: 'static/images/pantai-gapang.jpeg',
+        mapUrl: 'https://maps.app.goo.gl/iezPfyCjq14fXfhz7?g_st=ic'
+      },
+      {
+        id: 'rubiah-sea-garden',
+        name: 'Pulau Rubiah',
+        category: 'diving',
+        description: 'Surga bawah laut dengan keanekaragaman terumbu karang dan ikan. Destinasi diving kelas dunia.',
+        location: 'Pulau Rubiah, Sabang',
+        openHours: '07:00 - 17:00',
+        price: 25000,
+        facilities: ['Guide Diving', 'Penyewaan Alat', 'Perahu'],
+        rating: 4.9,
+        image: 'static/images/Pulau-rubiah.jpg',
+        mapUrl: 'https://maps.google.com/?q=5.8644,95.2378'
+      },
+      {
+        id: 'benteng-jepang',
+        name: 'Benteng Jepang',
+        category: 'sejarah',
+        description: 'Peninggalan sejarah Perang Dunia II. Terowongan dan bunker yang masih terawat.',
+        location: 'Anoi Itam, Sabang',
+        openHours: '08:00 - 17:00',
+        price: 10000,
+        facilities: ['Pemandu', 'Parkir', 'Toilet'],
+        rating: 4.5,
+        image: 'static/images/benteng-jepang.jpg',
+        mapUrl: 'https://maps.app.goo.gl/74W6aSsBmYfy1V839?g_st=ic'
+      },
+      {
+        id: 'danau-aneuk-laot',
+        name: 'Danau Aneuk Laot',
+        category: 'alam',
+        description: 'Danau air tawar di tengah pulau dengan pemandangan hijau asri. Tempat yang tenang dan sejuk.',
+        location: 'Paya Seunara, Sabang',
+        openHours: '06:00 - 18:00',
+        price: 5000,
+        facilities: ['Gazebo', 'Parkir', 'Warung'],
+        rating: 4.4,
+        image: 'static/images/danau-aneuk-laot.jpg',
+        mapUrl: 'https://maps.app.goo.gl/yoiV3Eu3LPPxSHgW8?g_st=ic'
+      },
+      {
+        id: 'pantai-sumur-tiga',
+        name: 'Pantai Sumur Tiga',
+        category: 'pantai',
+        description: 'Pantai dengan pasir putih dan tiga sumur air tawar alami yang unik.',
+        location: 'Ie Meulee, Sabang',
+        openHours: '06:00 - 18:00',
+        price: 5000,
+        facilities: ['Sumur Air Tawar', 'Toilet', 'Warung'],
+        rating: 4.3,
+        image: 'static/images/sumur-tiga.jpg',
+        mapUrl: 'https://maps.app.goo.gl/i41xSNcC45Tnm2xM6?g_st=ic'
+      },
+      {
+        id: 'air-terjun-pria-laot',
+        name: 'Air Terjun Pria Laot',
+        category: 'alam',
+        description: 'Air terjun tersembunyi di tengah hutan dengan kolam alami untuk berenang.',
+        location: 'Pria Laot, Sabang',
+        openHours: '07:00 - 17:00',
+        price: 10000,
+        facilities: ['Pemandu', 'Warung', 'Area Piknik'],
+        rating: 4.6,
+        image: 'static/images/pria-laot.jpeg',
+        mapUrl: 'https://maps.app.goo.gl/ahJzDv5JJr5kFDxk7?g_st=ic'
+      }
+    ];
+
+    const accommodations = [
+      {
+        id: 'freddies',
+        name: 'Freddies Sumurtiga',
+        type: 'resort',
+        description: 'Resort tepi pantai dengan suasana santai. Favorit wisatawan mancanegara.',
+        location: 'Pantai Sumur Tiga',
+        priceRange: { min: 450000, max: 1200000 },
+        rating: 4.7,
+        facilities: ['Pool', 'Restaurant', 'Diving', 'WiFi'],
+        image: 'static/images/freddies.jpg',
+        bookingLinks: {
+          traveloka: 'https://trv.lk/d2566caee',
+          booking: 'https://www.booking.com/hotel/id/freddies-santai-sumurtiga.html',
+          tiket: 'https://www.tiket.com/hotel/indonesia/freddies-santai-sumurtiga'
+        }
+      },
+      {
+        id: 'iboih-inn',
+        name: 'Iboih Inn',
+        type: 'homestay',
+        description: 'Penginapan sederhana langsung di tepi Pantai Iboih. Akses mudah ke spot snorkeling.',
+        location: 'Pantai Iboih',
+        priceRange: { min: 200000, max: 400000 },
+        rating: 4.5,
+        facilities: ['Restaurant', 'Snorkeling Rental', 'WiFi'],
+        image: 'static/images/iboih.png',
+        bookingLinks: {
+          traveloka: 'https://trv.lk/ea2d7f0c',
+          booking: 'https://www.booking.com/hotel/id/iboih-inn.html',
+          tiket: 'https://www.tiket.com/hotel/indonesia/iboih-inn'
+        }
+      },
+      {
+        id: 'lumba-lumba',
+        name: 'Lumba Lumba Diving Resort',
+        type: 'resort',
+        description: 'Resort diving profesional dengan pemandangan laut. Paket diving tersedia.',
+        location: 'Pantai Gapang',
+        priceRange: { min: 600000, max: 1500000 },
+        rating: 4.8,
+        facilities: ['Diving Center', 'Pool', 'Restaurant', 'Spa'],
+        image: 'static/images/lumba.jpg',
+        bookingLinks: {
+          traveloka: 'https://trv.lk/db877684',
+          booking: 'https://www.booking.com/hotel/id/lumba-lumba-diving.html',
+          tiket: 'https://www.tiket.com/hotel/indonesia/lumba-lumba-diving'
+        }
+      },
+      {
+        id: 'sabang-hill',
+        name: 'Oriental Sabang Resort',
+        type: 'hotel',
+        description: 'Hotel dengan pemandangan kota Sabang dari ketinggian. Kamar nyaman dan bersih.',
+        location: 'Kota Sabang',
+        priceRange: { min: 350000, max: 700000 },
+        rating: 4.3,
+        facilities: ['AC', 'WiFi', 'Parking', 'Restaurant'],
+        image: 'static/images/sabang-hill.jpg',
+        bookingLinks: {
+          traveloka: 'https://trv.lk/8b56efce',
+          booking: 'https://www.booking.com/hotel/id/sabang-hill.html',
+          tiket: 'https://www.tiket.com/hotel/indonesia/sabang-hill'
+        }
+      },
+      {
+        id: 'casa-nemo',
+        name: 'Casa Nemo Beach Resort',
+        type: 'resort',
+        description: 'Resort modern dengan fasilitas lengkap di tepi pantai Iboih.',
+        location: 'Pantai Iboih',
+        priceRange: { min: 800000, max: 2000000 },
+        rating: 4.9,
+        facilities: ['Private Beach', 'Pool', 'Spa', 'Diving', 'Restaurant'],
+        image: 'static/images/casa-nemo.jpg',
+        bookingLinks: {
+          traveloka: 'https://trv.lk/722f707b',
+          booking: 'https://www.booking.com/hotel/id/casa-nemo.html',
+          tiket: 'https://www.tiket.com/hotel/indonesia/casa-nemo'
+        }
+      },
+      {
+        id: 'rubiah-tirta',
+        name: 'Rubiah Tirta Divers',
+        type: 'homestay',
+        description: 'Penginapan backpacker dengan suasana komunitas diving yang ramah.',
+        location: 'Pantai Iboih',
+        priceRange: { min: 150000, max: 300000 },
+        rating: 4.4,
+        facilities: ['Diving', 'Shared Kitchen', 'WiFi'],
+        image: 'static/images/rubiah-tirta.jpg',
+        bookingLinks: {
+          traveloka: 'https://www.traveloka.com/hotel/indonesia/rubiah-tirta',
+          booking: 'https://www.booking.com/hotel/id/rubiah-tirta.html',
+          tiket: 'https://www.tiket.com/hotel/indonesia/rubiah-tirta'
+        }
+      }
+    ];
+
+    const culinaryItems = [
+      {
+        id: 'mie-aceh',
+        name: 'Mie Ikan Suree',
+        description: 'Mie khas Sabang dengan toping ikan suree yang gurih dan sedap. Tersedia goreng atau kuah.',
+        price: '25.000 - 40.000',
+        image: 'static/images/culinary/mie-aceh.jpg',
+        recommendation: 'Kedai Mie Sedap'
+      },
+      {
+        id: 'ikan-bakar',
+        name: 'Ikan Bakar Segar',
+        description: 'Ikan laut segar bakar dengan sambal khas Aceh. Wajib coba di tepi pantai.',
+        price: '50.000 - 100.000',
+        image: 'static/images/culinary/ikan-bakar.jpg',
+        recommendation: 'Rumah Makan Pantai Iboih'
+      },
+      {
+        id: 'kopi-aceh',
+        name: 'Kopi Aceh Gayo',
+        description: 'Kopi arabika premium dari dataran tinggi Gayo. Diseduh dengan saring tradisional.',
+        price: '10.000 - 25.000',
+        image: 'static/images/culinary/kopi-gayo.jpg',
+        recommendation: 'De Sagoe Platinum Kuphie'
+      },
+      {
+        id: 'martabak-aceh',
+        name: 'Martabak Aceh',
+        description: 'Martabak telur dengan rempah khas Aceh, berbeda dari martabak biasa.',
+        price: '10.000 - 25.000',
+        image: 'static/images/culinary/martabak.jpg',
+        recommendation: 'De Sagoe Platinum Kuphie'
+      },
+      {
+        id: 'sate-matang',
+        name: 'Sate Gurita',
+        description: 'Sate Gurita dengan kuah kacang. Khas Sabang.',
+        price: '30.000 - 50.000',
+        image: 'static/images/culinary/sate-gurita.jpeg',
+        recommendation: 'Sate Gurita Ajo'
+      },
+      {
+        id: 'es-kelapa',
+        name: 'Es Kelapa Muda',
+        description: 'Kelapa muda segar langsung dari pohon. Menyegarkan setelah snorkeling.',
+        price: '10.000 - 15.000',
+        image: 'static/images/culinary/es-kelapa.jpg',
+        recommendation: 'Sepanjang pantai Iboih'
+      }
+    ];
+
+    const tourPackages = [
+      {
+        id: 'paket-snorkeling',
+        name: 'Paket Snorkeling Adventure',
+        duration: '1 Hari',
+        description: 'Jelajahi keindahan bawah laut Sabang. Include snorkeling di 3 spot terbaik.',
+        includes: ['Transport lokal', 'Alat snorkeling', 'Makan siang', 'Guide', 'Tiket masuk'],
+        price: 350000,
+        image: '🤿'
+      },
+      {
+        id: 'paket-diving',
+        name: 'Paket Diving Pemula',
+        duration: '1 Hari',
+        description: 'Belajar diving dengan instruktur bersertifikat. Cocok untuk pemula.',
+        includes: ['Instruktur PADI', 'Peralatan diving', 'Makan siang', '2x diving'],
+        price: 850000,
+        image: '🐬'
+      },
+      {
+        id: 'paket-full-tour',
+        name: 'Paket Full Day Tour',
+        duration: '1 Hari',
+        description: 'Kunjungi semua spot wisata utama Sabang dalam satu hari.',
+        includes: ['Transport AC', 'Tiket semua destinasi', 'Makan siang', 'Guide', 'Dokumentasi'],
+        price: 450000,
+        image: '🚐'
+      },
+      {
+        id: 'paket-honeymoon',
+        name: 'Paket Honeymoon 3D2N',
+        duration: '3 Hari 2 Malam',
+        description: 'Paket romantis untuk pasangan dengan resort tepi pantai.',
+        includes: ['Hotel bintang 4', 'Dinner romantis', 'Couple spa', 'Sunset cruise', 'All transport'],
+        price: 3500000,
+        image: '💑'
+      },
+      {
+        id: 'paket-backpacker',
+        name: 'Paket Backpacker 2D1N',
+        duration: '2 Hari 1 Malam',
+        description: 'Paket hemat untuk backpacker. Pengalaman lengkap dengan budget terbatas.',
+        includes: ['Homestay', 'Snorkeling', 'Motor rental', 'Sarapan', 'Guide lokal'],
+        price: 550000,
+        image: '🎒'
+      },
+      {
+        id: 'paket-photo',
+        name: 'Paket Photo Tour',
+        duration: '1 Hari',
+        description: 'Tur fotografi ke spot-spot terbaik dengan fotografer profesional.',
+        includes: ['Fotografer pro', 'Transport', '50 foto edited', 'Makeup touch-up', 'Properti'],
+        price: 750000,
+        image: '📸'
+      }
+    ];
+
+    // ================= SDK INITIALIZATION =================
+    const dataHandler = {
+      onDataChanged(data) {
+        userReviews = data.filter(d => d.type === 'review');
+        savedItineraries = data.filter(d => d.type === 'itinerary');
+        renderSavedItineraries();
+      }
+    };
+
+    async function initApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            applyConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+              },
+              {
+                get: () => cfg.primary_color || defaultConfig.primary_color,
+                set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+              },
+              {
+                get: () => cfg.secondary_color || defaultConfig.secondary_color,
+                set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+              },
+              {
+                get: () => cfg.accent_color || defaultConfig.accent_color,
+                set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['site_title', cfg.site_title || defaultConfig.site_title],
+            ['hero_tagline', cfg.hero_tagline || defaultConfig.hero_tagline],
+            ['cta_button_text', cfg.cta_button_text || defaultConfig.cta_button_text]
+          ])
+        });
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize data SDK');
+        }
+      }
+
+      // Initial render
+      renderDestinations();
+      renderAccommodations();
+      renderCulinary();
+      renderPackages();
+      renderItineraryChips();
+      renderSavedItineraries();
+      calculateBudget();
+      applyConfig();
+    }
+
+    function applyConfig() {
+      // Apply text content
+      const navTitle = document.getElementById('nav-title');
+      const heroTitle = document.getElementById('hero-title');
+      const heroTagline = document.getElementById('hero-tagline');
+      const heroCta = document.getElementById('hero-cta');
+
+      if (navTitle) navTitle.textContent = config.site_title || defaultConfig.site_title;
+      if (heroTitle) heroTitle.textContent = config.site_title || defaultConfig.site_title;
+      if (heroTagline) heroTagline.textContent = config.hero_tagline || defaultConfig.hero_tagline;
+      if (heroCta) heroCta.textContent = config.cta_button_text || defaultConfig.cta_button_text;
+
+      // Apply colors
+      document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+      document.body.style.color = config.text_color || defaultConfig.text_color;
+    }
+
+    // ================= NAVIGATION =================
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function scrollToSection(sectionId) {
+      setActiveTab(sectionId);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function setActiveTab(tabId) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('[id^="tab-"]').forEach(el => {
+        el.classList.remove('tab-active');
+        el.classList.add('bg-white', 'shadow');
+      });
+
+      // Show selected content
+      const content = document.getElementById(tabId);
+      if (content) content.classList.remove('hidden');
+
+      // Activate selected tab
+      const tab = document.getElementById('tab-' + tabId);
+      if (tab) {
+        tab.classList.add('tab-active');
+        tab.classList.remove('bg-white', 'shadow');
+      }
+    }
+
+    // ================= RENDER FUNCTIONS =================
+    function renderDestinations() {
+      const grid = document.getElementById('destinations-grid');
+      const filter = document.getElementById('filter-category').value;
+      
+      const filtered = filter === 'all' 
+        ? destinations 
+        : destinations.filter(d => d.category === filter);
+
+      grid.innerHTML = filtered.map(dest => {
+        const destReviews = userReviews.filter(r => r.destination_id === dest.id);
+        const avgRating = destReviews.length 
+          ? (destReviews.reduce((sum, r) => sum + r.rating, 0) / destReviews.length).toFixed(1)
+          : dest.rating;
+        
+        const now = new Date();
+        const hour = now.getHours();
+        const [openH] = dest.openHours.split(' - ')[0].split(':').map(Number);
+        const [closeH] = (dest.openHours.split(' - ')[1] || '23:59').split(':').map(Number);
+        const isOpen = dest.openHours === '24 Jam' || (hour >= openH && hour < closeH);
+
+        return `
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in">
+            <div class="h-40 bg-gray-200 overflow-hidden relative">
+            <img src="${dest.image}" alt="${dest.name}" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 px-2 py-1 rounded-full text-xs text-white ${isOpen ? 'status-open' : 'status-closed'}">
+                ${isOpen ? '🟢 Buka' : '🔴 Tutup'}
+              </span>
+              <span class="absolute top-3 left-3 bg-white/90 px-2 py-1 rounded-full text-xs font-medium capitalize">
+                ${dest.category}
+              </span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display text-lg font-bold mb-1">${dest.name}</h3>
+              <p class="text-sm text-slate-500 mb-2 line-clamp-2">${dest.description}</p>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-amber-400">★</span>
+                <span class="font-semibold">${avgRating}</span>
+                <span class="text-slate-400 text-sm">(${destReviews.length + 10}+ review)</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-cyan-600 font-semibold">Rp ${dest.price.toLocaleString()}</span>
+                <span class="text-slate-500">⏰ ${dest.openHours}</span>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <button onclick="openDestinationModal('${dest.id}')" class="flex-1 bg-cyan-600 text-white py-2 rounded-lg text-sm hover:bg-cyan-700 transition">
+                  Lihat Detail
+                </button>
+                <a href="${dest.mapUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 border border-cyan-600 text-cyan-600 rounded-lg text-sm hover:bg-cyan-50 transition">
+                  📍
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterDestinations() {
+      renderDestinations();
+    }
+
+    function renderAccommodations() {
+      const grid = document.getElementById('accommodations-grid');
+      const filter = document.getElementById('filter-accommodation').value;
+      
+      const filtered = filter === 'all' 
+        ? accommodations 
+        : accommodations.filter(a => a.type === filter);
+
+      grid.innerHTML = filtered.map(acc => `
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in">
+          
+          <div class="h-48 relative bg-gray-200">
+            <img src="${acc.image}" alt="${acc.name}" class="w-full h-full object-cover">
+            
+            <span class="absolute top-3 left-3 bg-white/90 px-2 py-1 rounded-full text-xs font-medium capitalize shadow-sm">
+              ${acc.type}
+            </span>
+          </div>
+
+          <div class="p-4">
+            <h3 class="font-display text-lg font-bold mb-1">${acc.name}</h3>
+            <p class="text-sm text-slate-500 mb-2">📍 ${acc.location}</p>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-amber-400">★</span>
+              <span class="font-semibold">${acc.rating}</span>
+            </div>
+            <div class="text-cyan-600 font-bold mb-3">
+              Rp ${acc.priceRange.min.toLocaleString()} - ${acc.priceRange.max.toLocaleString()}/malam
+            </div>
+            <div class="flex flex-wrap gap-1 mb-3">
+              ${acc.facilities.map(f => `<span class="bg-slate-100 px-2 py-0.5 rounded text-xs">${f}</span>`).join('')}
+            </div>
+            <div class="space-y-2">
+              <a href="${acc.bookingLinks.traveloka}" class="block w-full text-center bg-blue-600 text-white py-2 rounded-lg text-sm booking-btn hover:bg-blue-700">Booking via Traveloka</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterAccommodations() {
+      renderAccommodations();
+    }
+
+    function renderCulinary() {
+      const grid = document.getElementById('culinary-grid');
+      grid.innerHTML = culinaryItems.map(item => `
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in">
+          
+          <div class="h-48 relative bg-gray-200">
+             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+          </div>
+
+          <div class="p-4">
+            <h3 class="font-display text-lg font-bold mb-1">${item.name}</h3>
+            <p class="text-sm text-slate-500 mb-2">${item.description}</p>
+            <div class="text-cyan-600 font-bold mb-2">Rp ${item.price}</div>
+            <div class="bg-amber-50 rounded-lg p-2 text-sm">
+              <strong>📍 Rekomendasi:</strong> ${item.recommendation}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPackages() {
+      const grid = document.getElementById('packages-grid');
+      grid.innerHTML = tourPackages.map(pkg => `
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover fade-in">
+          <div class="h-32 gradient-sunset flex items-center justify-center relative">
+            <span class="text-6xl">${pkg.image}</span>
+            <span class="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded-full text-xs font-bold">
+              ${pkg.duration}
+            </span>
+          </div>
+          <div class="p-4">
+            <h3 class="font-display text-lg font-bold mb-1">${pkg.name}</h3>
+            <p class="text-sm text-slate-500 mb-3">${pkg.description}</p>
+            <div class="mb-3">
+              <div class="text-xs font-semibold text-slate-600 mb-1">Termasuk:</div>
+              <div class="flex flex-wrap gap-1">
+                ${pkg.includes.map(i => `<span class="bg-cyan-50 text-cyan-700 px-2 py-0.5 rounded text-xs">${i}</span>`).join('')}
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs text-slate-500">Mulai dari</div>
+                <div class="text-xl font-bold text-cyan-600">Rp ${pkg.price.toLocaleString()}</div>
+                <div class="text-xs text-slate-400">/orang</div>
+              </div>
+              <button onclick="bookPackage('${pkg.id}')" class="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-600 transition">
+                Pesan
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function bookPackage(pkgId) {
+      const pkg = tourPackages.find(p => p.id === pkgId);
+      if (pkg) {
+        // Show inline confirmation instead of alert
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Dihubungi!';
+        btn.classList.add('bg-green-500');
+        btn.classList.remove('bg-orange-500');
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.classList.remove('bg-green-500');
+          btn.classList.add('bg-orange-500');
+        }, 2000);
+      }
+    }
+
+    // ================= MODAL FUNCTIONS =================
+    function openDestinationModal(destId) {
+      const dest = destinations.find(d => d.id === destId);
+      if (!dest) return;
+
+      const destReviews = userReviews.filter(r => r.destination_id === destId);
+      const modal = document.getElementById('destination-modal');
+      const content = document.getElementById('modal-content');
+
+     content.innerHTML = `
+        <div class="h-64 bg-gray-200 relative"> 
+          <img src="${dest.image}" alt="${dest.name}" class="w-full h-full object-cover">
+         
+          <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 w-8 h-8 rounded-full flex items-center justify-center hover:bg-white transition z-10">✕</button>
+        </div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="font-display text-2xl font-bold">${dest.name}</h2>
+              <p class="text-slate-500">📍 ${dest.location}</p>
+            </div>
+            <div class="text-right">
+              <div class="flex items-center gap-1 text-amber-400">
+                <span class="text-xl">★</span>
+                <span class="text-slate-800 font-bold text-lg">${dest.rating}</span>
+              </div>
+              <div class="text-sm text-slate-500">${destReviews.length + 10}+ review</div>
+            </div>
+          </div>
+          
+          <p class="text-slate-600 mb-4">${dest.description}</p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-slate-50 rounded-xl p-3">
+              <div class="text-sm text-slate-500">Jam Operasional</div>
+              <div class="font-semibold">⏰ ${dest.openHours}</div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3">
+              <div class="text-sm text-slate-500">Tiket Masuk</div>
+              <div class="font-semibold text-cyan-600">Rp ${dest.price.toLocaleString()}</div>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <div class="text-sm font-semibold mb-2">Fasilitas:</div>
+            <div class="flex flex-wrap gap-2">
+              ${dest.facilities.map(f => `<span class="bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-sm">${f}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div class="flex gap-3 mb-6">
+            <a href="${dest.mapUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 bg-cyan-600 text-white py-3 rounded-xl text-center font-semibold hover:bg-cyan-700 transition">
+              📍 Buka di Maps
+            </a>
+            <button onclick="openReviewModal('${dest.id}')" class="flex-1 border-2 border-cyan-600 text-cyan-600 py-3 rounded-xl font-semibold hover:bg-cyan-50 transition">
+              ⭐ Tulis Review
+            </button>
+          </div>
+          
+          <!-- Reviews Section -->
+          <div class="border-t pt-4">
+            <h3 class="font-bold mb-3">Review Pengunjung (${destReviews.length})</h3>
+            <div class="space-y-3 max-h-60 overflow-y-auto">
+              ${destReviews.length === 0 
+                ? '<p class="text-slate-500 text-center py-4">Belum ada review. Jadilah yang pertama!</p>'
+                : destReviews.map(r => `
+                  <div class="bg-slate-50 rounded-lg p-3">
+                    <div class="flex items-center justify-between mb-1">
+                      <span class="font-semibold">${r.reviewer_name}</span>
+                      <span class="text-amber-400">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+                    </div>
+                    <p class="text-sm text-slate-600">${r.review}</p>
+                    <div class="text-xs text-slate-400 mt-1">${new Date(r.created_at).toLocaleDateString('id-ID')}</div>
+                  </div>
+                `).join('')
+              }
+            </div>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('destination-modal').classList.add('hidden');
+    }
+
+    function openReviewModal(destId) {
+      document.getElementById('review-destination-id').value = destId;
+      document.getElementById('review-name').value = '';
+      document.getElementById('review-text').value = '';
+      currentReviewRating = 0;
+      updateRatingStars();
+      document.getElementById('review-modal').classList.remove('hidden');
+    }
+
+    function closeReviewModal() {
+      document.getElementById('review-modal').classList.add('hidden');
+    }
+
+    function setReviewRating(rating) {
+      currentReviewRating = rating;
+      updateRatingStars();
+    }
+
+    function updateRatingStars() {
+      const stars = document.querySelectorAll('#review-rating button');
+      stars.forEach((star, index) => {
+        star.classList.toggle('text-amber-400', index < currentReviewRating);
+        star.classList.toggle('text-slate-300', index >= currentReviewRating);
+      });
+    }
+
+    async function submitReview() {
+      const destId = document.getElementById('review-destination-id').value;
+      const name = document.getElementById('review-name').value.trim();
+      const text = document.getElementById('review-text').value.trim();
+
+      if (!name || !text || currentReviewRating === 0) {
+        const btn = document.getElementById('submit-review-btn');
+        btn.textContent = '⚠️ Lengkapi semua field';
+        btn.classList.add('bg-red-500');
+        setTimeout(() => {
+          btn.textContent = 'Kirim Review';
+          btn.classList.remove('bg-red-500');
+        }, 2000);
+        return;
+      }
+
+      if (userReviews.length >= 999) {
+        const btn = document.getElementById('submit-review-btn');
+        btn.textContent = '⚠️ Limit tercapai';
+        setTimeout(() => {
+          btn.textContent = 'Kirim Review';
+        }, 2000);
+        return;
+      }
+
+      const btn = document.getElementById('submit-review-btn');
+      btn.textContent = 'Mengirim...';
+      btn.disabled = true;
+
+      const review = {
+        id: Date.now().toString(),
+        type: 'review',
+        destination_id: destId,
+        rating: currentReviewRating,
+        review: text,
+        reviewer_name: name,
+        created_at: new Date().toISOString()
+      };
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create(review);
+        if (result.isOk) {
+          btn.textContent = '✓ Terkirim!';
+          setTimeout(() => {
+            closeReviewModal();
+            openDestinationModal(destId);
+            btn.textContent = 'Kirim Review';
+            btn.disabled = false;
+          }, 1000);
+        } else {
+          btn.textContent = '⚠️ Gagal mengirim';
+          btn.disabled = false;
+          setTimeout(() => {
+            btn.textContent = 'Kirim Review';
+          }, 2000);
+        }
+      }
+    }
+
+    // ================= ITINERARY FUNCTIONS =================
+    function renderItineraryChips() {
+      const container = document.getElementById('itinerary-destinations');
+      container.innerHTML = destinations.map(dest => `
+        <button onclick="toggleItineraryDestination('${dest.id}')" 
+                id="chip-${dest.id}"
+                class="px-3 py-1 rounded-full text-sm border transition flex items-center gap-2 ${
+                  selectedItineraryDestinations.includes(dest.id)
+                    ? 'bg-cyan-600 text-white border-cyan-600'
+                    : 'bg-white text-slate-600 border-slate-300 hover:border-cyan-400'
+                }">
+          ${dest.image.includes('/') 
+            ? `<img src="${dest.image}" class="w-5 h-5 rounded-full object-cover">` 
+            : `<span>${dest.image}</span>`
+          }
+          <span>${dest.name}</span>
+        </button>
+      `).join('');
+    }
+
+    function toggleItineraryDestination(destId) {
+      const index = selectedItineraryDestinations.indexOf(destId);
+      if (index > -1) {
+        selectedItineraryDestinations.splice(index, 1);
+      } else {
+        selectedItineraryDestinations.push(destId);
+      }
+      renderItineraryChips();
+    }
+
+    async function saveItinerary() {
+      const name = document.getElementById('itinerary-name').value.trim();
+      if (!name || selectedItineraryDestinations.length === 0) {
+        const btn = document.getElementById('save-itinerary-btn');
+        btn.textContent = '⚠️ Lengkapi data';
+        setTimeout(() => {
+          btn.textContent = '💾 Simpan Itinerary';
+        }, 2000);
+        return;
+      }
+
+      if (savedItineraries.length >= 999) {
+        const btn = document.getElementById('save-itinerary-btn');
+        btn.textContent = '⚠️ Limit tercapai';
+        setTimeout(() => {
+          btn.textContent = '💾 Simpan Itinerary';
+        }, 2000);
+        return;
+      }
+
+      const btn = document.getElementById('save-itinerary-btn');
+      btn.textContent = 'Menyimpan...';
+      btn.disabled = true;
+
+      const itinerary = {
+        id: Date.now().toString(),
+        type: 'itinerary',
+        itinerary_name: name,
+        destinations: JSON.stringify(selectedItineraryDestinations),
+        budget: calculateTotalBudget(),
+        created_at: new Date().toISOString()
+      };
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create(itinerary);
+        if (result.isOk) {
+          btn.textContent = '✓ Tersimpan!';
+          document.getElementById('itinerary-name').value = '';
+          selectedItineraryDestinations = [];
+          renderItineraryChips();
+          setTimeout(() => {
+            btn.textContent = '💾 Simpan Itinerary';
+            btn.disabled = false;
+          }, 1500);
+        } else {
+          btn.textContent = '⚠️ Gagal menyimpan';
+          btn.disabled = false;
+          setTimeout(() => {
+            btn.textContent = '💾 Simpan Itinerary';
+          }, 2000);
+        }
+      }
+    }
+
+    function generateAutoItinerary() {
+      const topDestinations = destinations.slice(0, 5).map(d => d.id);
+      selectedItineraryDestinations = [...topDestinations];
+      document.getElementById('itinerary-name').value = 'Best of Sabang ' + new Date().getFullYear();
+      renderItineraryChips();
+    }
+
+    function renderSavedItineraries() {
+      const container = document.getElementById('saved-itineraries');
+      if (savedItineraries.length === 0) {
+        container.innerHTML = '<p class="text-slate-500 text-center py-4">Belum ada itinerary tersimpan</p>';
+        return;
+      }
+
+      container.innerHTML = savedItineraries.map(it => {
+        const destIds = JSON.parse(it.destinations || '[]');
+        const destNames = destIds.map(id => {
+          const d = destinations.find(dest => dest.id === id);
+          return d ? d.name : id;
+        });
+
+        return `
+          <div class="border rounded-xl p-4 hover:border-cyan-400 transition">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold">${it.itinerary_name}</h4>
+              <button onclick="deleteItinerary('${it.__backendId}')" class="text-red-500 hover:text-red-700 text-sm">🗑️</button>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              ${destNames.map(n => `<span class="bg-cyan-50 text-cyan-700 px-2 py-0.5 rounded text-xs">${n}</span>`).join('')}
+            </div>
+            <div class="text-sm text-slate-500">
+              Budget: <span class="text-cyan-600 font-semibold">Rp ${(it.budget || 0).toLocaleString()}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function deleteItinerary(backendId) {
+      const itinerary = savedItineraries.find(it => it.__backendId === backendId);
+      if (itinerary && window.dataSdk) {
+        const result = await window.dataSdk.delete(itinerary);
+        if (!result.isOk) {
+          console.error('Failed to delete itinerary');
+        }
+      }
+    }
+
+    // ================= BUDGET CALCULATOR =================
+    function calculateBudget() {
+      const days = parseInt(document.getElementById('budget-days').value) || 1;
+      const people = parseInt(document.getElementById('budget-people').value) || 1;
+      const accType = document.getElementById('budget-accommodation').value;
+
+      const accPrices = { budget: 300000, mid: 600000, luxury: 1200000 };
+      const dailyFood = 150000;
+      const dailyTransport = 100000;
+      const avgTicket = 50000;
+
+      const accommodation = accPrices[accType] * days;
+      const food = dailyFood * days * people;
+      const transport = dailyTransport * days;
+      const tickets = avgTicket * days * people;
+
+      const total = accommodation + food + transport + tickets;
+
+      document.getElementById('budget-total').textContent = 'Rp ' + total.toLocaleString();
+      return total;
+    }
+
+    function calculateTotalBudget() {
+      return calculateBudget();
+    }
+
+    // Initialize app
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ca9e950c0a8fdfe',t:'MTc3MDU0MDk2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
